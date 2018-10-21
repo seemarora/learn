@@ -1,6 +1,6 @@
 #include <inttypes.h>
 
 
-int a(unsigned char *b, int c);
-int aa(Z* c);
-void aaa(Z *a, int b);
+int disassemble8080Op(unsigned char *code, int pc);
+int emulate8080(State8080* state);
+void generateInterrupt(State8080 *state, int interrupt_num);
