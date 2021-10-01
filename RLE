@@ -1,0 +1,29 @@
+// O(n) time | O(n) space
+public String runLengthEncoding(String string) {
+	char currentChar = string.charAt(0);
+	int currentCount = 1;
+
+	StringBuilder sb = new StringBuilder();
+
+	for (int i = 1; i < string.length(); i++) {
+		char ch = string.charAt(i);
+		if (ch == currentChar) {
+			currentCount++;
+			if (currentCount == 10) {
+				appendToStringBuilder(sb, currentChar, 9);
+				currentCount = 1;
+			}
+		} else {
+			appendToStringBuilder(sb, currentChar, currentCount);
+			currentChar = ch;
+			currentCount = 1;
+		}
+	}
+	appendToStringBuilder(sb, currentChar, currentCount);
+	return sb.toString();
+}
+
+private void appendToStringBuilder(StringBuilder sb, char ch, int count) {
+	sb.append(Integer.toString(count));
+	sb.append(ch);
+}
