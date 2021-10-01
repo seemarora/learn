@@ -1,0 +1,54 @@
+// Solution 1 - 
+// O(n^3) time | O(n) space
+public static String longestPalindromicSubstring(String str) {
+	String longestPalindrome = "";
+
+	for (int i = 0; i < str.length(); i++) {
+		for (int j = i; j < str.length(); j++) {
+			String substring = str.substring(i, j + 1);
+			if (isPalindrome(substring) && substring.length() > longestPalindrome.length()) {
+				longestPalindrome = substring;
+			}
+		}
+	}
+
+	return longestPalindrome;
+}
+
+private static boolean isPalindrome(String str) {
+	int start = 0;
+	int end = str.length() - 1;
+	while (start < end) {
+		if (str.charAt(start) != str.charAt(end)) {
+			return false;
+		}
+		start += 1;
+		end -= 1;
+	}
+	return true;
+}
+
+// Solution 2 - 
+// O(n^2) time | O(n) space
+public static String longestPalindromicSubstring(String str) {
+	int[] longestTillNow = {0, 1};
+	for (int i = 1; i < str.length(); i++) {
+		int[] odd = getLongestPalindromeFor(str, i - 1, i + 1);
+		int[] even = getLongestPalindromeFor(str, i - 1, i);
+		int[] longest = even[1] - even[0] > odd[1] - odd[0] ? even : odd;
+		longestTillNow = longestTillNow[1] - longestTillNow[0] > longest[1] - longest[0] ? longestTillNow : longest;
+	}
+	return str.substring(longestTillNow[0], longestTillNow[1]);
+}
+
+private static int[] getLongestPalindromeFor(String str, int startIdx, int endIdx) {
+	while (startIdx >= 0 && endIdx < str.length()) {
+		if (str.charAt(startIdx) == str.charAt(endIdx)) {
+			startIdx--;
+			endIdx++;
+		} else {
+			break;
+		}
+	}
+	return new int[]{startIdx + 1, endIdx};
+}
