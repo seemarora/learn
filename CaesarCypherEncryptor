@@ -1,0 +1,24 @@
+// O(n) time | O(n) space
+public static String caesarCypherEncryptor(String str, int key) {
+	char[] encryptedChars = new char[str.length()];
+	key = key % 26;
+
+	for (int i = 0; i < str.length(); i++) {
+		encryptedChars[i] = getEncryptedChar(str.charAt(i), key);
+	}
+
+	return new String(encryptedChars);
+}
+
+private static char getEncryptedChar(char ch, int key) {
+	int code = ch + key;
+	if (code <= 122) {
+		return (char) code;
+	} else {
+		return (char) (96 + (code % 122));
+	}
+}
+
+// Another solution with same space and time complexity 
+// is to store all smallcase chars in a string
+// and use indexof() + key to find encrypted char's index.
