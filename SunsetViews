@@ -1,0 +1,47 @@
+// Solution 1 -
+// O(n) time | O(n) space
+public ArrayList<Integer> sunsetViews(int[] buildings, String direction) {
+	ArrayList<Integer> indexes = new ArrayList<>();
+	int maxTillNow = 0;
+	int idx = 0;
+	int step = 1;
+	if (direction.equals("EAST")) {
+		idx = buildings.length - 1;
+		step = -1;
+	}
+	while (idx >= 0 && idx < buildings.length) {
+		if (buildings[idx] > maxTillNow) {
+			maxTillNow = buildings[idx];
+			indexes.add(idx);
+		}
+		idx += step;
+	}
+	if (direction.equals("EAST")) {
+		Collections.reverse(indexes);
+	}
+	return indexes;
+}
+
+// Solution 2 -
+// O(n) time | O(n) space
+public ArrayList<Integer> sunsetViews(int[] buildings, String direction) {
+	ArrayList<Integer> indexes = new ArrayList<>();
+	int idx = 0;
+	int step = 1;
+	if (direction.equals("WEST")) {
+		idx = buildings.length - 1;
+		step = -1;
+	}
+	while (idx >= 0 && idx < buildings.length) {
+		int buildingHeight = buildings[idx];
+		while (indexes.size() > 0 && buildings[indexes.get(indexes.size() - 1)] <= buildingHeight) {
+			indexes.remove(indexes.size() - 1);
+		}
+		indexes.add(idx);
+		idx += step;
+	}
+	if (direction.equals("WEST")) {
+		Collections.reverse(indexes);
+	}
+	return indexes;
+}
