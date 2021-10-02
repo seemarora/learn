@@ -1,0 +1,23 @@
+public static boolean balancedBrackets(String str) {
+	Stack<Character> stack = new Stack<>();
+	for (int i = 0; i < str.length(); i ++) {
+		char ch = str.charAt(i);
+		if (ch == '{' || ch == '[' || ch == '(') {
+			stack.push(ch);
+		} else if (ch == '}' || ch == ']' || ch == ')') {
+			if (stack.isEmpty() || ch != getClosingBracket(stack.pop())) {
+				return false;
+			}
+		}
+	}
+	return stack.isEmpty();
+}
+
+private static char getClosingBracket(char ch) {
+	switch(ch) {
+		case '(' : return ')';
+		case '{' : return '}';
+		case '[' : return ']';
+	}
+	return 0;
+}
