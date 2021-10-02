@@ -1,0 +1,30 @@
+static class MinMaxStack {
+	
+	List<Integer> stack = new LinkedList<>();
+	List<int[]> minMaxList = new LinkedList<>();
+
+	public int peek() {
+		return stack.get(0);
+	}
+
+	public int pop() {
+		minMaxList.remove(0);
+		return stack.remove(0);
+	}
+
+	public void push(Integer number) {
+		int[] minMax = new int[2];
+		minMax[0] = minMaxList.isEmpty() ? number : Math.min(number, getMin());
+		minMax[1] = minMaxList.isEmpty() ? number : Math.max(number, getMax());
+		minMaxList.add(0, minMax);
+		stack.add(0, number);
+	}
+
+	public int getMin() {
+		return minMaxList.get(0)[0];
+	}
+
+	public int getMax() {
+		return minMaxList.get(0)[1];
+	}
+}
